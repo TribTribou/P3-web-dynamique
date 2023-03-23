@@ -151,6 +151,10 @@ li:hover {
 	color: white;
 	background-color: #1D6154;
 }
+.filtres:focus{
+	color: white;
+	background-color: #1D6154;
+}
 .gallery {
 	width: 100%;
 	display: grid;
