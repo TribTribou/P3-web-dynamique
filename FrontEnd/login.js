@@ -1,16 +1,22 @@
 fetch("http://localhost:5678/api/works").then(p => p.json().then(
-    /* J'utilise le fetch /works en guise de placeholder du /users/login qui bloque mon code pour l'instant */
-    p =>{
-      console.log(p)
-      
-      const Navigation = document.querySelector("li")
-      const BoutonLogin = document.querySelector("#htmlLogin")
-      const BoutonProjets = document.querySelector("#htmlProjets")
-      const main = document.querySelector("main")
-      const loginBloc = document.createElement("section")
-      const formulaireLogin = document.createElement("form")
+  /* J'utilise le fetch /works en guise de placeholder du /users/login qui bloque mon code pour l'instant */
+  p =>{
+    console.log(p)
+    
+    const Navigation = document.querySelector("li")
+    const BoutonLogin = document.querySelector("#htmlLogin")
+    const BoutonProjets = document.querySelector("#htmlProjets")
+    const main = document.querySelector("main")
+    const loginBloc = document.createElement("section")
+    const formulaireLogin = document.createElement("form")
+    const modaleConnexionRefusée = document.createElement("aside")
+    const blocModale = document.createElement("div")
+    const messageConnexionRefusée = document.createElement("h1")
+    const closeModalButton = document.createElement("button")
+    main.appendChild(loginBloc)
       loginBloc.id= "login"
-      main.appendChild(loginBloc)
+      modaleConnexionRefusée.id = "modaleConnexionRefusée"
+      document.querySelector("#login").style.display = "none"
       /* Ma fonction login. J'ai ciblé les sections préexistante du main + le footer pour les cacher sans les supprimer
       le .textContent vide me sert à reset ma création d'éléments de la fonction login, 
       pour éviter les doublons à chaque nouveaux clics sur login. */
@@ -19,9 +25,15 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
       // Ma création d'éléments spécifiques à la page "Log in".
       loginH1.textContent = "Log in"
       textMdpOubli.textContent = "Mot de passe oublié"
+      messageConnexionRefusée.textContent = "Connexion refusée, e-mail ou mot de passe incorrect"
+      closeModalButton.textContent = "Fermer"
       loginBloc.appendChild(loginH1)
       loginBloc.appendChild(formulaireLogin)
       loginBloc.appendChild(textMdpOubli)
+      loginBloc.appendChild(modaleConnexionRefusée)
+      modaleConnexionRefusée.appendChild(blocModale)
+      blocModale.appendChild(messageConnexionRefusée)
+      messageConnexionRefusée.appendChild(closeModalButton)
       // Filiation des éléments
       // J'ajoute des attributs action et method à mes formulaires
       
@@ -46,6 +58,10 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
       mdpInput.setAttribute("name","champMdp")
       boutonConnecter.setAttribute("type", "submit")
       boutonConnecter.setAttribute("value", "Se connecter")
+      modaleConnexionRefusée.setAttribute("class","modal")
+      modaleConnexionRefusée.setAttribute("aria-hidden","true")
+      modaleConnexionRefusée.setAttribute("role","dialog")
+      blocModale.setAttribute("class", "modal-wrapper")
       boutonConnecter.id = "boutonSeconnecter"
       
         /* Je me crée des variables pour sélectionner facilement des lignes précises du code html.
@@ -61,6 +77,7 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
           document.querySelector("#contact").style.display = "none"
           document.querySelector("footer").style.display = "none"
           document.querySelector("#login").style.display = "block"
+          document.querySelector("#modaleConnexionRefusée").style.display = "none"
           
             BoutonLogin.style.fontWeight = "bold"
             BoutonProjets.style.fontWeight = "normal"
@@ -70,6 +87,44 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
         
             console.log(BoutonLogin)
             console.log("fonction Login complétée")
+
+            formulaireLogin.addEventListener("submit", function(submitEvent) {
+              submitEvent.preventDefault(); // pour éviter la soumission du formulaire par défaut
+              
+              const champMail = submitEvent.target.champMail.value;
+              const champMdp = submitEvent.target.champMdp.value;
+            
+              fetch("http://localhost:5678/api/users/login", {
+                method: "POST",
+                body: JSON.stringify({ email: champMail, password: champMdp }),
+                headers: {
+                  "Content-Type": "application/json"
+                }
+              }).then(response => {
+                console.log(response)
+                if (response.ok) {
+                  // connexion réussie
+                  console.log("Connexion réussie !");
+                  // insérer ici le code pour rediriger vers l'accueil
+                  document.querySelector("#introduction").style.display = "flex"
+                  document.querySelector("#portfolio").style.display = "block"
+                  document.querySelector("#contact").style.display = "block"
+                  document.querySelector("#login").style.display = "none"
+                  document.querySelector("footer").style.display = "block"
+                  BoutonLogin.style.fontWeight = "normal"
+                  BoutonProjets.style.fontWeight = "normal"
+                  console.log("retour à l'accueil effectuée")
+                } else {
+                  // erreur de connexion
+                  console.log("Email ou mot de passe incorrect !");
+                  // insérer ici le code pour afficher un message d'erreur
+                  document.querySelector("#modaleConnexionRefusée").style.display = "block"
+                }
+              }).catch(error => {
+                // erreur lors de la requête
+                console.log("Erreur lors de la requête :", error);
+                // insérer ici le code pour afficher un message d'erreur
+              });
             
         })
         
@@ -112,53 +167,22 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
              }}) 
                 
             }) */
-            formulaireLogin.addEventListener("submit", function(submitEvent) {
-                submitEvent.preventDefault(); // pour éviter la soumission du formulaire par défaut
-                
-                const champMail = submitEvent.target.champMail.value;
-                const champMdp = submitEvent.target.champMdp.value;
-              
-                fetch("http://localhost:5678/api/users/login", {
-                  method: "POST",
-                  body: JSON.stringify({ email: champMail, password: champMdp }),
-                  headers: {
-                    "Content-Type": "application/json"
-                  }
-                }).then(response => {
-                  console.log(response)
-                  if (response.ok) {
-                    // connexion réussie
-                    console.log("Connexion réussie !");
-                    // insérer ici le code pour rediriger vers l'accueil
-                    document.querySelector("#introduction").style.display = "flex"
-                    document.querySelector("#portfolio").style.display = "block"
-                    document.querySelector("#contact").style.display = "block"
-                    document.querySelector("#login").style.display = "none"
-                    document.querySelector("footer").style.display = "block"
-                    BoutonLogin.style.fontWeight = "normal"
-                    BoutonProjets.style.fontWeight = "normal"
-                    console.log("retour à l'accueil effectuée")
-                  } else {
-                    // erreur de connexion
-                    console.log("Email ou mot de passe incorrect !");
-                    // insérer ici le code pour afficher un message d'erreur
-                  }
-                }).catch(error => {
-                  // erreur lors de la requête
-                  console.log("Erreur lors de la requête :", error);
-                  // insérer ici le code pour afficher un message d'erreur
-                });
               });
               
               
 
         })
         
-        /* event.target.nomduchamp.value  submit.target.namechamp.value (value= ce qui est entré dans le champ)
+        /*  event.target.nomduchamp.value  submit.target.namechamp.value (value= ce qui est entré dans le champ)
         utiliser le fetch post /users/login après avoir récupéré les informations des formulaires 
         => .then if false => message erreure if true => page d'accueil
         => intégrer un console.log pour vérifier d'éventuelles erreures
          */
 
+        closeModalButton.addEventListener("click", function () {
+          document.querySelector("#modaleConnexionRefusée").style.display = "none"
+        })
+        
+        
       }
 ))
