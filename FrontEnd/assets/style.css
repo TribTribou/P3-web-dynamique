@@ -256,13 +256,14 @@ footer nav ul {
 #login p:hover {
 	color: #B1663C;
 }
-
-
+#instagram {
+	order: 1;
+}
 .modal {
 	position: fixed;
 	display:flex;
+	align-items: center;
 	justify-content: center;
-	align-content: center;
 	top:0;
 	left:0;
 	width: 100%;
@@ -270,11 +271,22 @@ footer nav ul {
 	background: rgba(0, 0, 0, 0.8);
 }
 .modal-wrapper {
-	padding-left: 20%;
-	padding-top: 30%;
+	margin-left: 20%;
+	margin-top: 25%;
 	width: 900px;
+	background-color: white;
 }
 .modal h1{
 	text-align: center;
-
+	color: black;
+	font-size: 40px;
+	line-height: 40px;
+	padding-top: 30px;
+}
+.modal button {
+	width: 20%;
+	align-self: center;
+	margin-top: 15px;
+	margin-bottom: 30px;
+	font-size: large;
 }
