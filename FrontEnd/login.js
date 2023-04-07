@@ -16,12 +16,16 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
     const boutonLogout = document.createElement("li")
     const ul = document.querySelector("ul")
     const blocModeEdition = document.createElement("div")
+    const iconeModifier = document.createElement("i")
     const boutonPublierChangement = document.createElement("button")
+    const iconeModifierIntro = document.createElement("i")
     const header = document.querySelector("header")
+    const imgIntroduction = document.querySelector("#introduction figure")
     const boutonModifierPresentation = document.createElement("button")
-    const sectionIntroduction = document.querySelector("#introduction")
     const boutonModifierProjets = document.createElement("button")
+    const iconeModifierProjets = document.createElement("i")
     const mesProjetsH2 = document.querySelector("#portfolio h2")
+    const Filtres = document.querySelector("#filtres-travaux")
     main.appendChild(loginBloc)
     loginBloc.id= "login"
     modaleConnexionRefusée.id = "modaleConnexionRefusée"
@@ -50,8 +54,11 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
     messageConnexionRefusée.appendChild(closeModalButton)
     header.appendChild(blocModeEdition)
     blocModeEdition.appendChild(boutonPublierChangement)
-    sectionIntroduction.appendChild(boutonModifierPresentation)
+    blocModeEdition.appendChild(iconeModifier)
+    imgIntroduction.appendChild(boutonModifierPresentation)
+    boutonModifierPresentation.appendChild(iconeModifierIntro)
     mesProjetsH2.appendChild(boutonModifierProjets)
+    boutonModifierProjets.appendChild(iconeModifierProjets)
     ul.appendChild(boutonLogout)
     // Filiation des éléments
     // J'ajoute des attributs action et method à mes formulaires
@@ -81,6 +88,12 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
     modaleConnexionRefusée.setAttribute("aria-hidden","true")
     modaleConnexionRefusée.setAttribute("role","dialog")
     blocModale.setAttribute("class", "modal-wrapper")
+    iconeModifier.setAttribute("class", 'fa-regular fa-pen-to-square')
+    iconeModifier.setAttribute("style", 'color: #ffffff;')
+    iconeModifierIntro.setAttribute("class", 'fa-regular fa-pen-to-square')
+    iconeModifierIntro.setAttribute("style", 'color: #000000;')
+    iconeModifierProjets.setAttribute("class", 'fa-regular fa-pen-to-square')
+    iconeModifierProjets.setAttribute("style", 'color: #000000;')
     boutonConnecter.id = "boutonSeconnecter"
     
     // Condition d'authentification pour afficher le mode édition + logout
@@ -91,12 +104,14 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
       boutonModifierPresentation.style.display = "flex"
       boutonModifierProjets.style.display = "flex"
       BoutonLogin.style.display = "none"
+      Filtres.style.display = "none"
     } else {
       boutonLogout.style.display = "none"
       blocModeEdition.style.display = "none"
       boutonModifierPresentation.style.display = "none"
       boutonModifierProjets.style.display = "none"
       BoutonLogin.style.display = "flex"
+      Filtres.style.display = "flex"
     }
     
     
@@ -155,6 +170,7 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
                 boutonModifierPresentation.style.display = "flex"
                 boutonModifierProjets.style.display = "flex"
                 BoutonLogin.style.display = "none"
+                Filtres.style.display = "none"
                 console.log(localStorage.token)
                 console.log("retour à l'accueil effectuée")
               } else {
@@ -224,6 +240,7 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
           boutonModifierPresentation.style.display = "none"
           boutonModifierProjets.style.display = "none"
           BoutonLogin.style.display = "flex"
+          Filtres.style.display = "flex"
           console.log(localStorage.token)
 
         })
