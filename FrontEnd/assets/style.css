@@ -260,7 +260,7 @@ footer nav ul {
 #instagram {
 	order: 1;
 }
-.modal {
+.modal, #modaleGaleriePhoto{
 	position: fixed;
 	display:flex;
 	align-items: center;
@@ -271,7 +271,7 @@ footer nav ul {
 	height: 100%;
 	background: rgba(0, 0, 0, 0.8);
 }
-.modal-wrapper {
+.modal-wrapper, #modaleGaleriePhoto div {
 	margin-left: 20%;
 	margin-top: 25%;
 	width: 900px;

@@ -29,6 +29,7 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
     main.appendChild(loginBloc)
     loginBloc.id= "login"
     modaleConnexionRefusée.id = "modaleConnexionRefusée"
+    boutonModifierProjets.id = "boutonModifierProjets"
     document.querySelector("#login").style.display = "none"
     /* Ma fonction login. J'ai ciblé les sections préexistante du main + le footer pour les cacher sans les supprimer
     le .textContent vide me sert à reset ma création d'éléments de la fonction login, 
