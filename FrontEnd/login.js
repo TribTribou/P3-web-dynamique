@@ -1,3 +1,6 @@
+const boutonModifierProjets = document.createElement("button")
+boutonModifierProjets.id = "boutonModifierProjets"
+
 fetch("http://localhost:5678/api/works").then(p => p.json().then(
   /* J'utilise le fetch /works en guise de placeholder du /users/login qui bloque mon code pour l'instant */
   p =>{
@@ -9,6 +12,12 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
     const main = document.querySelector("main")
     const loginBloc = document.createElement("section")
     const formulaireLogin = document.createElement("form")
+    /* label + input crée & affilié. */
+    const labelMail = document.createElement("label")
+    const mailInput = document.createElement("input")
+    const labelMdp = document.createElement("label")
+    const mdpInput = document.createElement("input")
+    const boutonConnecter = document.createElement("input")
     const modaleConnexionRefusée = document.createElement("aside")
     const blocModale = document.createElement("div")
     const messageConnexionRefusée = document.createElement("h1")
@@ -22,21 +31,16 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
     const header = document.querySelector("header")
     const imgIntroduction = document.querySelector("#introduction figure")
     const boutonModifierPresentation = document.createElement("button")
-    const boutonModifierProjets = document.createElement("button")
     const iconeModifierProjets = document.createElement("i")
     const mesProjetsH2 = document.querySelector("#portfolio h2")
     const Filtres = document.querySelector("#filtres-travaux")
     main.appendChild(loginBloc)
     loginBloc.id= "login"
     modaleConnexionRefusée.id = "modaleConnexionRefusée"
-    boutonModifierProjets.id = "boutonModifierProjets"
     document.querySelector("#login").style.display = "none"
-    /* Ma fonction login. J'ai ciblé les sections préexistante du main + le footer pour les cacher sans les supprimer
-    le .textContent vide me sert à reset ma création d'éléments de la fonction login, 
-    pour éviter les doublons à chaque nouveaux clics sur login. */
     const loginH1 = document.createElement("h2")
     const textMdpOubli = document.createElement("p")
-    // Ma création d'éléments spécifiques à la page "Log in".
+    // Ajout du texte.
     loginH1.textContent = "Log in"
     textMdpOubli.textContent = "Mot de passe oublié"
     messageConnexionRefusée.textContent = "Erreur dans l'identifiant ou le mot de passe"
@@ -46,8 +50,14 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
     boutonPublierChangement.textContent = "publier les changements"
     boutonModifierPresentation.textContent = "modifier"
     boutonModifierProjets.textContent = "modifier"
+    // Filiation des éléments
     loginBloc.appendChild(loginH1)
     loginBloc.appendChild(formulaireLogin)
+    formulaireLogin.appendChild(labelMail)
+    formulaireLogin.appendChild(mailInput)
+    formulaireLogin.appendChild(labelMdp)
+    formulaireLogin.appendChild(mdpInput)
+    formulaireLogin.appendChild(boutonConnecter)
     loginBloc.appendChild(textMdpOubli)
     loginBloc.appendChild(modaleConnexionRefusée)
     modaleConnexionRefusée.appendChild(blocModale)
@@ -61,22 +71,10 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
     mesProjetsH2.appendChild(boutonModifierProjets)
     boutonModifierProjets.appendChild(iconeModifierProjets)
     ul.appendChild(boutonLogout)
-    // Filiation des éléments
-    // J'ajoute des attributs action et method à mes formulaires
     
-    const labelMail = document.createElement("label")
-    const mailInput = document.createElement("input")
-    const labelMdp = document.createElement("label")
-    const mdpInput = document.createElement("input")
-    const boutonConnecter = document.createElement("input")
-    formulaireLogin.appendChild(labelMail)
-    formulaireLogin.appendChild(mailInput)
-    formulaireLogin.appendChild(labelMdp)
-    formulaireLogin.appendChild(mdpInput)
-    formulaireLogin.appendChild(boutonConnecter)
-    /* label + input crée & affilié. */
     labelMail.textContent = "E-mail"
     labelMdp.textContent = "Mot de passe"
+    // J'ajoute des attributs action et method à mes formulaires
     labelMail.setAttribute("for","mail")
     mailInput.setAttribute("type","email")
     mailInput.setAttribute("name","champMail")
@@ -114,14 +112,7 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
       BoutonLogin.style.display = "flex"
       Filtres.style.display = "flex"
     }
-    
-    
-    /* Je me crée des variables pour sélectionner facilement des lignes précises du code html.
-        Je crée en avance ma section "login" et je lui attribue un id pour la sélectionner facilement. */
-
-      
-
-
+    // fonction login
       BoutonLogin.addEventListener ("click", function (){
         console.log("bouton Login bien cliqué")
         document.querySelector("#introduction").style.display = "none"
@@ -130,12 +121,9 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
         document.querySelector("footer").style.display = "none"
         document.querySelector("#login").style.display = "block"
         document.querySelector("#modaleConnexionRefusée").style.display = "none"
-          
+          // petits changements visuels pour indiquer dans quelle section on se trouve
           BoutonLogin.style.fontWeight = "bold"
           BoutonProjets.style.fontWeight = "normal"
-
-
-          /* ajouts d'attributs pour rendre les formulaires fonctionnels */
         
           console.log(BoutonLogin)
           console.log("fonction Login complétée")
