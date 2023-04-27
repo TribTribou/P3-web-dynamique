@@ -1,4 +1,4 @@
-const boutonModifierProjets = document.createElement("button")
+const boutonModifierProjets = document.createElement("button");
 boutonModifierProjets.id = "boutonModifierProjets"
 
 fetch("http://localhost:5678/api/works").then(p => p.json().then(
@@ -12,7 +12,8 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
     const main = document.querySelector("main")
     const loginBloc = document.createElement("section")
     const formulaireLogin = document.createElement("form")
-    /* label + input crée & affilié. */
+    const blocModeEdition = document.createElement("div")
+    // label + input crée & affilié.
     const labelMail = document.createElement("label")
     const mailInput = document.createElement("input")
     const labelMdp = document.createElement("label")
@@ -24,16 +25,16 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
     const closeModalButton = document.createElement("button")
     const boutonLogout = document.createElement("li")
     const ul = document.querySelector("ul")
-    const blocModeEdition = document.createElement("div")
+    const header = document.querySelector("header")
+    const imgIntroduction = document.querySelector("#introduction figure")
+    const mesProjetsH2 = document.querySelector("#portfolio h2")
+    const Filtres = document.querySelector("#filtres-travaux")
+    //création des éléments mode édition
     const iconeModifier = document.createElement("i")
     const boutonPublierChangement = document.createElement("button")
     const iconeModifierIntro = document.createElement("i")
-    const header = document.querySelector("header")
-    const imgIntroduction = document.querySelector("#introduction figure")
     const boutonModifierPresentation = document.createElement("button")
     const iconeModifierProjets = document.createElement("i")
-    const mesProjetsH2 = document.querySelector("#portfolio h2")
-    const Filtres = document.querySelector("#filtres-travaux")
     main.appendChild(loginBloc)
     loginBloc.id= "login"
     modaleConnexionRefusée.id = "modaleConnexionRefusée"
@@ -46,6 +47,7 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
     messageConnexionRefusée.textContent = "Erreur dans l'identifiant ou le mot de passe"
     closeModalButton.textContent = "Fermer"
     boutonLogout.textContent = "logout"
+    //Ajout Texte des éléments d'éditions
     blocModeEdition.textContent = "Mode édition"
     boutonPublierChangement.textContent = "publier les changements"
     boutonModifierPresentation.textContent = "modifier"
@@ -63,14 +65,15 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
     modaleConnexionRefusée.appendChild(blocModale)
     blocModale.appendChild(messageConnexionRefusée)
     messageConnexionRefusée.appendChild(closeModalButton)
+    mesProjetsH2.appendChild(boutonModifierProjets)
+    ul.appendChild(boutonLogout)
     header.appendChild(blocModeEdition)
+    // Affiliation des éléments d'éditions
     blocModeEdition.appendChild(boutonPublierChangement)
     blocModeEdition.appendChild(iconeModifier)
     imgIntroduction.appendChild(boutonModifierPresentation)
     boutonModifierPresentation.appendChild(iconeModifierIntro)
-    mesProjetsH2.appendChild(boutonModifierProjets)
     boutonModifierProjets.appendChild(iconeModifierProjets)
-    ul.appendChild(boutonLogout)
     
     labelMail.textContent = "E-mail"
     labelMdp.textContent = "Mot de passe"
@@ -87,81 +90,108 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
     modaleConnexionRefusée.setAttribute("aria-hidden","true")
     modaleConnexionRefusée.setAttribute("role","dialog")
     blocModale.setAttribute("class", "modal-wrapper")
+    boutonConnecter.id = "boutonSeconnecter"
+    // Attributs des éléments d'éditions
     iconeModifier.setAttribute("class", 'fa-regular fa-pen-to-square')
     iconeModifier.setAttribute("style", 'color: #ffffff;')
     iconeModifierIntro.setAttribute("class", 'fa-regular fa-pen-to-square')
     iconeModifierIntro.setAttribute("style", 'color: #000000;')
     iconeModifierProjets.setAttribute("class", 'fa-regular fa-pen-to-square')
     iconeModifierProjets.setAttribute("style", 'color: #000000;')
-    boutonConnecter.id = "boutonSeconnecter"
     
     // Condition d'authentification pour afficher le mode édition + logout
     var token = localStorage.getItem('token')
     if (token) {
+      console.log("oui")
       boutonLogout.style.display = "flex"
       blocModeEdition.style.display = "flex"
       boutonModifierPresentation.style.display = "flex"
       boutonModifierProjets.style.display = "flex"
       BoutonLogin.style.display = "none"
       Filtres.style.display = "none"
+      //Fonction deconnexion
+      boutonLogout.addEventListener("click", function () {
+        localStorage.removeItem('token')
+        boutonLogout.style.display = "none"
+        blocModeEdition.style.display = "none"
+        boutonModifierPresentation.style.display = "none"
+        boutonModifierProjets.style.display = "none"
+        BoutonLogin.style.display = "flex"
+        Filtres.style.display = "flex"
+        console.log(localStorage.token)
+      })
     } else {
+      console.log("non")
       boutonLogout.style.display = "none"
       blocModeEdition.style.display = "none"
       boutonModifierPresentation.style.display = "none"
       boutonModifierProjets.style.display = "none"
       BoutonLogin.style.display = "flex"
       Filtres.style.display = "flex"
+
     }
     // fonction login
-      BoutonLogin.addEventListener ("click", function (){
-        console.log("bouton Login bien cliqué")
-        document.querySelector("#introduction").style.display = "none"
-        document.querySelector("#portfolio").style.display = "none"
-        document.querySelector("#contact").style.display = "none"
-        document.querySelector("footer").style.display = "none"
-        document.querySelector("#login").style.display = "block"
-        document.querySelector("#modaleConnexionRefusée").style.display = "none"
-          // petits changements visuels pour indiquer dans quelle section on se trouve
-          BoutonLogin.style.fontWeight = "bold"
-          BoutonProjets.style.fontWeight = "normal"
+    BoutonLogin.addEventListener ("click", function (){
+      console.log("bouton Login bien cliqué")
+      document.querySelector("#introduction").style.display = "none"
+      document.querySelector("#portfolio").style.display = "none"
+      document.querySelector("#contact").style.display = "none"
+      document.querySelector("footer").style.display = "none"
+      document.querySelector("#login").style.display = "block"
+      document.querySelector("#modaleConnexionRefusée").style.display = "none"
+      // petits changements visuels pour indiquer dans quelle section on se trouve
+      BoutonLogin.style.fontWeight = "bold"
+      BoutonProjets.style.fontWeight = "normal"
+      
+      console.log(BoutonLogin)
+      console.log("fonction Login complétée")
+      
+      formulaireLogin.addEventListener("submit", function(submitEvent) {
+        submitEvent.preventDefault(); // pour éviter la soumission du formulaire par défaut
         
-          console.log(BoutonLogin)
-          console.log("fonction Login complétée")
-
-          formulaireLogin.addEventListener("submit", function(submitEvent) {
-            submitEvent.preventDefault(); // pour éviter la soumission du formulaire par défaut
-              
-            const champMail = submitEvent.target.champMail.value;
-            const champMdp = submitEvent.target.champMdp.value;
-            
-            fetch("http://localhost:5678/api/users/login", {
-              method: "POST",
-              body: JSON.stringify({ email: champMail, password: champMdp }),
-              headers: {
-                "Content-Type": "application/json"
-              }
-            }).then(response => response.json().then ((response) => {
-              console.log(response)
-              if (response.userId == 1) {
-                // connexion réussie
-                console.log("Connexion réussie !");
-                // insérer ici le code pour rediriger vers l'accueil
-                document.querySelector("#introduction").style.display = "flex"
-                document.querySelector("#portfolio").style.display = "block"
-                document.querySelector("#contact").style.display = "block"
-                document.querySelector("#login").style.display = "none"
-                document.querySelector("footer").style.display = "block"
-                BoutonLogin.style.fontWeight = "normal"
-                BoutonProjets.style.fontWeight = "normal"
-                localStorage.setItem('token', response.token)
-                boutonLogout.style.display = "flex"
-                blocModeEdition.style.display = "flex"
-                boutonModifierPresentation.style.display = "flex"
-                boutonModifierProjets.style.display = "flex"
-                BoutonLogin.style.display = "none"
-                Filtres.style.display = "none"
-                console.log(localStorage.token)
-                console.log("retour à l'accueil effectuée")
+        const champMail = submitEvent.target.champMail.value;
+        const champMdp = submitEvent.target.champMdp.value;
+        
+        fetch("http://localhost:5678/api/users/login", {
+          method: "POST",
+          body: JSON.stringify({ email: champMail, password: champMdp }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }).then(response => response.json().then ((response) => {
+          console.log(response)
+          if (response.userId == 1) {
+            // connexion réussie
+            console.log("Connexion réussie !");
+            // insérer ici le code pour rediriger vers l'accueil
+            document.querySelector("#introduction").style.display = "flex"
+            document.querySelector("#portfolio").style.display = "block"
+            document.querySelector("#contact").style.display = "block"
+            document.querySelector("#login").style.display = "none"
+            document.querySelector("footer").style.display = "block"
+            //Suite du code login
+            BoutonLogin.style.fontWeight = "normal"
+            BoutonProjets.style.fontWeight = "normal"
+            localStorage.setItem('token', response.token)
+            boutonLogout.style.display = "flex"
+            blocModeEdition.style.display = "flex"
+            boutonModifierPresentation.style.display = "flex"
+            boutonModifierProjets.style.display = "flex"
+            BoutonLogin.style.display = "none"
+            Filtres.style.display = "none"
+            console.log(localStorage.token)
+            console.log("retour à l'accueil effectuée")
+            //Fonction deconnexion
+            boutonLogout.addEventListener("click", function () {
+              localStorage.removeItem('token')
+              boutonLogout.style.display = "none"
+              blocModeEdition.style.display = "none"
+              boutonModifierPresentation.style.display = "none"
+              boutonModifierProjets.style.display = "none"
+              BoutonLogin.style.display = "flex"
+              Filtres.style.display = "flex"
+              console.log(localStorage.token)
+            })
               } else {
                 // erreur de connexion
                 console.log("Email ou mot de passe incorrect !");
@@ -174,7 +204,7 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
               // insérer ici le code pour afficher un message d'erreur
             }));
             
-        })
+          })
         
     
         BoutonProjets.addEventListener ("click", function (){
@@ -221,18 +251,6 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
 
         })
         
-        //Fonction deconnexion
-        boutonLogout.addEventListener("click", function () {
-          localStorage.removeItem('token')
-          boutonLogout.style.display = "none"
-          blocModeEdition.style.display = "none"
-          boutonModifierPresentation.style.display = "none"
-          boutonModifierProjets.style.display = "none"
-          BoutonLogin.style.display = "flex"
-          Filtres.style.display = "flex"
-          console.log(localStorage.token)
-
-        })
         /*  event.target.nomduchamp.value  submit.target.namechamp.value (value= ce qui est entré dans le champ)
         utiliser le fetch post /users/login après avoir récupéré les informations des formulaires 
         => .then if false => message erreure if true => page d'accueil

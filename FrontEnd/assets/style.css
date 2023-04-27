@@ -389,6 +389,10 @@ body, #introduction button, #portfolio h2 button {
 	font-size: 25px;
 	margin-bottom: 8%;
 }
+#modaleAjoutPhoto h2 {
+	position: absolute;
+	top: 3%
+}
 
 #modaleGaleriePhoto div p{
 	overflow: hidden;
@@ -415,7 +419,7 @@ body, #introduction button, #portfolio h2 button {
 
 #modaleGaleriePhoto div p div img{
 	max-width: 100%;
-	max-height: 100%;
+	max-height: 90%;
 }
 
 #modaleGaleriePhoto div p div:hover #cadreNoirboutonsMove {
@@ -428,7 +432,7 @@ body, #introduction button, #portfolio h2 button {
 	align-self: flex-start;
 	border: none;
 	background-color: rgb(255, 255, 255);
-	font-size:small;
+	font-size:smaller;
 }
 
 #cadreNoirboutonDelete {
@@ -440,7 +444,7 @@ body, #introduction button, #portfolio h2 button {
 	height: 17%;
 	position:absolute;
 	top: -11px;
-	right: 3px;
+	right: 35%;
 	font-size: x-small;
 }
 #cadreNoirboutonsMove {
@@ -453,7 +457,7 @@ body, #introduction button, #portfolio h2 button {
 	position:absolute;
 	font-size: x-small;
 	top: -11px;
-	right: 27px;
+	right: 65%;
 	display: none;
 }
 
@@ -492,6 +496,7 @@ body, #introduction button, #portfolio h2 button {
 	border-bottom: #B3B3B3;
 	border-bottom-style: groove;
 	border-bottom-width: 2px;
+	margin-bottom: 22%;
 }
 #boxCadreImage {
 	display: flex;
@@ -499,41 +504,52 @@ body, #introduction button, #portfolio h2 button {
 	align-items: flex-end;
 	background-color: #E8F1F6;
 	color: #444444;
-	padding-bottom: 4%;
-	width: 400px;
-	height: 200px;
+	font-size: x-small;
+	width: 70%;
+	min-height:200px;
 }
 
 #formulaireAjoutPhoto input {
-	margin-top: 4px;
-	margin-bottom: 20px;
-	height: 55px;
+	margin-top: 2px;
 	width: 100%;
 	border: none;
 }
 
-#inputAjoutImage {
+#inputTitre {
+	height: 45px;
+}
+
+#inputAjoutImage{
 	background-color: #CBD6DC;
 	color: #306685;
 	text-align: center;
-	line-height: 55px;
-	font-size: 17px;
+	line-height: 35px;
+	font-size: small;
 	font-weight: bold;
-	max-width: 220px;
-	height: 55px;
+	max-width: 45%;
+	max-height: 20%;
 	border-radius: 50px;
 	position: relative;
-	bottom: 45%;
+	margin-bottom: 0;
+	bottom: 25%;
 }
 
+#catégories {
+	width: 100%;
+	height: 45px;
+	border: none;
+	background-color: white;
+	margin-bottom: 10%;
+}
 
 #inputBoutonValider {
 	background-color: #A7A7A7;
 	color: #FFFFFF;
-	max-width: 40%;
+	max-width: 45%;
+	max-height: 6%;
 	font-size: larger;
 	position: absolute;
-	bottom: 5%;
+	bottom: 1%;
 }
 
 #inputBoutonValider:hover {
@@ -542,4 +558,13 @@ body, #introduction button, #portfolio h2 button {
 
 #formulaireAjoutPhoto label {
 	align-self: flex-start;
+	margin-top: 1%;
+	margin-bottom: 5%;
+}
+
+#placementImageuploade {
+	width: 35%;
+	height: 35%;
+	position: absolute;
+	top: 11%;
 }
