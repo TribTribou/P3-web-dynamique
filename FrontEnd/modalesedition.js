@@ -97,9 +97,9 @@ labelCatégorie.setAttribute("for","Catégorie")
 inputTitre.setAttribute("name", "champTitre")
 inputTitre.setAttribute("type", "text")
 inputCatégorie.setAttribute("name", "champCatégorie")
-optionCatégorie1.setAttribute("value", "Objets")
-optionCatégorie2.setAttribute("value", "Appartements")
-optionCatégorie3.setAttribute("value", "Hôtels & Restaurants")
+optionCatégorie1.setAttribute("value", 1)
+optionCatégorie2.setAttribute("value", 2)
+optionCatégorie3.setAttribute("value", 3)
 inputBoutonValider.setAttribute("type","submit")
 inputBoutonValider.setAttribute("value", "Valider")
 
@@ -216,15 +216,17 @@ inputAjoutImage.addEventListener("click",function() {
 // fonction d'envoi du formulaire, je l'appel après avoir générer l'aperçu de l'image pour éviter des conflits
  function submitForm() {
      // Créer un objet FormData avec les données du formulaire
-     let projetenvoyé = {"id":1 + p.length,"title":inputTitre.value,"imageUrl":"http://localhost:5678/images/" + inputTitre.value + ".png","image":hiddenInputUploadImage.files[0],"categoryId":inputCatégorie.value,"userId":1}
-     /* const formData = new FormData();
-     formData.append("id", 1 + p.length);
-     formData.append("title", inputTitre.value);
-     formData.append("imageUrl", "http://localhost:5678/images/" + inputTitre.value + ".png");
-     formData.append("image", hiddenInputUploadImage.files[0]);
-     formData.append("categoryId", inputCatégorie.value);
-     formData.append("userId", 1);
-     console.log(formData) */
+     //let projetenvoyé = {"id":1 + p.length,"title":inputTitre.value,"imageUrl":"http://localhost:5678/images/" + inputTitre.value + ".png","image":hiddenInputUploadImage.files[0],"categoryId":inputCatégorie.value,"userId":1}
+     var envoiFormulaire = new FormData();
+     //formData.append("id", 1 + p.length);
+     envoiFormulaire.append("image", hiddenInputUploadImage.files[0]);
+     envoiFormulaire.append("title", inputTitre.value);
+     //formData.append("imageUrl", "http://localhost:5678/images/" + inputTitre.value + ".png");
+     envoiFormulaire.append("category", 1/* inputCatégorie.value */);
+     //formData.append("userId", 1);
+     console.log(envoiFormulaire)
+     console.log(hiddenInputUploadImage.files[0])
+     console.log(inputTitre.value)
 // Envoyer les données du formulaire avec fetch
 // On utilise la method post pour l'envoyer dans le back end
 fetch("http://localhost:5678/api/works", {
@@ -234,9 +236,9 @@ fetch("http://localhost:5678/api/works", {
         Authorization: "Bearer " + token
 
     },
-    body:  "multipart/form-data"
+    body:  envoiFormulaire
 })
-.then(response => response.json())
+.then(response => response.json()
 .then(data => {
     console.log("Projet posté :", data);
     p = data;
@@ -245,7 +247,7 @@ fetch("http://localhost:5678/api/works", {
     placementImageuploade.style.display = "none";
     modaleAjoutPhoto.style.display = "none";
     blocmodaleGaleriePhoto.style.display = "flex"
-})
+}))
 .catch(error => console.error(error));
 }         
 
@@ -260,7 +262,7 @@ placementImageuploade.style.display = "flex"
 // Il faut donc utiliser les [] pour que la sélection s'opère correctement dans le code
 })
 
-inputBoutonValider.addEventListener("click", function() {
+inputBoutonValider.addEventListener("click", function(event) {
 event.preventDefault();
 submitForm()
 console.log(submitForm)
