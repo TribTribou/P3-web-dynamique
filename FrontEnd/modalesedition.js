@@ -31,6 +31,9 @@ var token = localStorage.getItem('token')
 // initialisation de la variable p, pour pouvoir récupérer et manipuler la liste des projets de la galerie
 let p = [];
 
+// variable de stockage d'un id pour gérer la suppression d'un projet
+let projetASupprimerId = null;
+
 
 
 // filiation
@@ -149,11 +152,24 @@ p =>{
         cadreNoirboutonDelete.setAttribute("class", 'fa-regular fa-trash-can')
         cadreNoirboutonsMove.setAttribute("class", 'fa-solid fa-up-down-left-right')
         // Fonction de suppression d'un projet
-        cadreNoirboutonDelete.addEventListener("click", function(){
+        cadreNoirboutonDelete.addEventListener("click", function(event){
+            event.preventDefault();
             console.log("cadreNoirBoutonDelete bien cliqué")
-            // style.display = "none" pour tester le ciblage sans conséquences.
-            // Code à changer plus tard pour réaliser une véritable suppression.
-            ficheImage.style.display = "none"
+            // Récupération de l'id dans la console pour avoir un retour visuel de l'élément ciblé
+            console.log(currentElement.id)
+            // Stockage de l'id de l'élément ciblé pour gérer la suppression via la variable crée au début du code.
+            projetASupprimerId = currentElement.id;
+            console.log(projetASupprimerId)
+            // Enfin, la fonction de suppression
+            fetch(`http://localhost:5678/api/works/${currentElement.id}`,
+            { method: "DELETE",
+            headers: {
+                Authorization: "Bearer " + token
+            },
+        }).then(response => {
+            console.log("Projet supprimé !");
+        })
+        .catch(error => console.error("Erreur lors de la suppression du projet :", error));
         })
     }
 }))
@@ -207,14 +223,15 @@ modaleAjoutPhoto.style.display = "none"
 
 
 //event click pour lier l'input type image à l'input caché type file.
-inputAjoutImage.addEventListener("click",function() {
+inputAjoutImage.addEventListener("click",function(event) {
     event.preventDefault();
     console.log("boutonAjouterPhoto bien cliqué")
     hiddenInputUploadImage.click()
  })
 
 // fonction d'envoi du formulaire, je l'appel après avoir générer l'aperçu de l'image pour éviter des conflits
- function submitForm() {
+ function submitForm(event) {
+    event.preventDefault();
      // Créer un objet FormData avec les données du formulaire
      //let projetenvoyé = {"id":1 + p.length,"title":inputTitre.value,"imageUrl":"http://localhost:5678/images/" + inputTitre.value + ".png","image":hiddenInputUploadImage.files[0],"categoryId":inputCatégorie.value,"userId":1}
      var envoiFormulaire = new FormData();
@@ -249,6 +266,7 @@ fetch("http://localhost:5678/api/works", {
     blocmodaleGaleriePhoto.style.display = "flex"
 }))
 .catch(error => console.error(error));
+return false;
 }         
 
 //fonction pour récupérer et afficher un aperçu de l'image uploadée
@@ -264,6 +282,7 @@ placementImageuploade.style.display = "flex"
 
 inputBoutonValider.addEventListener("click", function(event) {
 event.preventDefault();
-submitForm()
-console.log(submitForm)
+submitForm(event);
+console.log(submitForm);
+return false;
 })
