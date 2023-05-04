@@ -107,7 +107,9 @@ inputBoutonValider.setAttribute("type","submit")
 inputBoutonValider.setAttribute("value", "Valider")
 
 // ajout d'attributs spécifiques
-inputTitre.required = "true"
+inputTitre.setAttribute("required", "required")
+hiddenInputUploadImage.setAttribute("required", "required")
+inputAjoutImage.setAttribute("required", "required")
 
 // Ajout du texte
 h2blocmodaleGaleriePhoto.textContent = "Galerie Photo"
@@ -153,7 +155,7 @@ p =>{
         cadreNoirboutonsMove.setAttribute("class", 'fa-solid fa-up-down-left-right')
         // Fonction de suppression d'un projet
         cadreNoirboutonDelete.addEventListener("click", function(event){
-            event.preventDefault();
+            //event.preventDefault();
             console.log("cadreNoirBoutonDelete bien cliqué")
             // Récupération de l'id dans la console pour avoir un retour visuel de l'élément ciblé
             console.log(currentElement.id)
@@ -231,7 +233,7 @@ inputAjoutImage.addEventListener("click",function(event) {
 
 // fonction d'envoi du formulaire, je l'appel après avoir générer l'aperçu de l'image pour éviter des conflits
  function submitForm(event) {
-    event.preventDefault();
+    //event.preventDefault();
      // Créer un objet FormData avec les données du formulaire
      //let projetenvoyé = {"id":1 + p.length,"title":inputTitre.value,"imageUrl":"http://localhost:5678/images/" + inputTitre.value + ".png","image":hiddenInputUploadImage.files[0],"categoryId":inputCatégorie.value,"userId":1}
      var envoiFormulaire = new FormData();
@@ -239,7 +241,7 @@ inputAjoutImage.addEventListener("click",function(event) {
      envoiFormulaire.append("image", hiddenInputUploadImage.files[0]);
      envoiFormulaire.append("title", inputTitre.value);
      //formData.append("imageUrl", "http://localhost:5678/images/" + inputTitre.value + ".png");
-     envoiFormulaire.append("category", 1/* inputCatégorie.value */);
+     envoiFormulaire.append("category",inputCatégorie.value);
      //formData.append("userId", 1);
      console.log(envoiFormulaire)
      console.log(hiddenInputUploadImage.files[0])
@@ -266,7 +268,6 @@ fetch("http://localhost:5678/api/works", {
     blocmodaleGaleriePhoto.style.display = "flex"
 }))
 .catch(error => console.error(error));
-return false;
 }         
 
 //fonction pour récupérer et afficher un aperçu de l'image uploadée
@@ -280,9 +281,13 @@ placementImageuploade.style.display = "flex"
 // Il faut donc utiliser les [] pour que la sélection s'opère correctement dans le code
 })
 
-inputBoutonValider.addEventListener("click", function(event) {
-event.preventDefault();
-submitForm(event);
-console.log(submitForm);
-return false;
+
+formulaireAjoutPhoto.addEventListener("submit", function(event){
+    event.preventDefault()
+    if (hiddenInputUploadImage.files[0]) {
+    submitForm(event);
+    } else {
+        //message erreur
+        console.log("Message erreur")
+    }
 })
