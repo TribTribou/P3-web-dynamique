@@ -131,6 +131,8 @@ modaleAjoutPhoto.style.display = "none"
 hiddenInputUploadImage.style.display = "none"
 placementImageuploade.style.display = "none"
 
+function AffichageGalerieModale() {
+galerieblocmodaleGaleriePhoto.textContent = "";
 //fetch pour récupérer la liste des travaux et afficher les images, pour pouvoir éditer
 fetch("http://localhost:5678/api/works").then(p => p.json().then(
 p =>{
@@ -170,11 +172,16 @@ p =>{
             },
         }).then(response => {
             console.log("Projet supprimé !");
+            AffichageGalerieModale() // pour rafraichir la galerie
         })
         .catch(error => console.error("Erreur lors de la suppression du projet :", error));
         })
     }
 }))
+.catch(error => console.error("Erreur lors du chargement des projets :", error));
+}
+
+AffichageGalerieModale()
 
 // event click pour afficher les modales
 boutonModifierProjets.addEventListener("click", function() {
@@ -241,7 +248,7 @@ inputAjoutImage.addEventListener("click",function(event) {
      envoiFormulaire.append("image", hiddenInputUploadImage.files[0]);
      envoiFormulaire.append("title", inputTitre.value);
      //formData.append("imageUrl", "http://localhost:5678/images/" + inputTitre.value + ".png");
-     envoiFormulaire.append("category",inputCatégorie.value);
+     envoiFormulaire.append("category", inputCatégorie.value);
      //formData.append("userId", 1);
      console.log(envoiFormulaire)
      console.log(hiddenInputUploadImage.files[0])
@@ -266,6 +273,7 @@ fetch("http://localhost:5678/api/works", {
     placementImageuploade.style.display = "none";
     modaleAjoutPhoto.style.display = "none";
     blocmodaleGaleriePhoto.style.display = "flex"
+    AffichageGalerieModale()
 }))
 .catch(error => console.error(error));
 }         
