@@ -49,15 +49,7 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
 
         BoutonTous.addEventListener ("click", function (){
             console.log("bouton Tous bien cliqué")
-            /*const projetsFiltrés = projets.filter(function (){})*/
             document.querySelector(".gallery").textContent = ""
-            /* const projetsFiltrésTous = projets.filter(function (figure){
-                return projets.name = "objets"
-            }); */
-            /*const ProjetsTous = p.filter(function (Projet){
-                return Projet.category
-
-            }) */
             for (let currentElement of p ) {
                 const Projet = document.createElement("figure")
                 const ProjetImg = document.createElement("img")
@@ -70,9 +62,7 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
                 document.querySelector(".gallery").appendChild(Projet)
             }
             console.log(p)
-            /* console.log(ProjetsTous) =>n'est plu utilisé */
         })
-        /* console.log(projetsFiltrés) */
 
         BoutonObjets.addEventListener ("click", function (){
             console.log("bouton Objets bien cliqué")

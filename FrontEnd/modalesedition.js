@@ -131,6 +131,24 @@ modaleAjoutPhoto.style.display = "none"
 hiddenInputUploadImage.style.display = "none"
 placementImageuploade.style.display = "none"
 
+function ActualisationGaleriePrincipale() {
+    fetch("http://localhost:5678/api/works").then(p => p.json().then(
+p =>{
+        document.querySelector(".gallery").textContent = ""
+            for (let currentElement of p ) {
+                const Projet = document.createElement("figure")
+                const ProjetImg = document.createElement("img")
+                const ProjetTitle = document.createElement("figcaption")
+                ProjetImg.src = currentElement.imageUrl
+                ProjetTitle.textContent = currentElement.title
+                Projet.appendChild(ProjetImg)
+                Projet.appendChild(ProjetTitle)
+                document.querySelector(".gallery").appendChild(Projet)
+            }
+            console.log("Galerie principale actualisée")
+        }))
+}
+
 function AffichageGalerieModale() {
 galerieblocmodaleGaleriePhoto.textContent = "";
 //fetch pour récupérer la liste des travaux et afficher les images, pour pouvoir éditer
@@ -172,7 +190,8 @@ p =>{
             },
         }).then(response => {
             console.log("Projet supprimé !");
-            AffichageGalerieModale() // pour rafraichir la galerie
+            AffichageGalerieModale() // pour rafraichir la galerie de la modale
+            ActualisationGaleriePrincipale()
         })
         .catch(error => console.error("Erreur lors de la suppression du projet :", error));
         })
@@ -274,6 +293,7 @@ fetch("http://localhost:5678/api/works", {
     modaleAjoutPhoto.style.display = "none";
     blocmodaleGaleriePhoto.style.display = "flex"
     AffichageGalerieModale()
+    ActualisationGaleriePrincipale()
 }))
 .catch(error => console.error(error));
 }         
