@@ -8,11 +8,13 @@ const boutonAjouterPhoto = document.createElement("button")
 const boutonSupprimergalerie = document.createElement("button")
 const portfolio = document.querySelector("#portfolio")
 const modaleAjoutPhoto = document.createElement("aside")
-const boutonCloseModaleAjoutPhoto = document.createElement("button")
-const boutonRetourGaleriePhoto = document.createElement("button")
+const boutonCloseModaleAjoutPhoto = document.createElement("div")
+const boutonRetourGaleriePhoto = document.createElement("div")
 const h2modaleAjoutPhoto = document.createElement("h2")
 const formulaireAjoutPhoto = document.createElement("form")
 const boxCadreImage = document.createElement("div")
+const textBoxCadreImage = document.createElement("div")
+const imagePlaceholderBoxCadreImage = document.createElement('div')
 const conteneurImageuploadée = document.createElement("div")
 const inputAjoutImage = document.createElement("input")
 const hiddenInputUploadImage = document.createElement("input")
@@ -21,10 +23,12 @@ const labelTitre = document.createElement("label")
 const inputTitre = document.createElement("input")
 const labelCatégorie = document.createElement("label")
 const inputCatégorie = document.createElement("select")
+const optionCatégorie0 = document.createElement("option")
 const optionCatégorie1 = document.createElement("option")
 const optionCatégorie2 = document.createElement("option")
 const optionCatégorie3 = document.createElement("option")
 const inputBoutonValider = document.createElement("input")
+const erreurImageManquante = document.createElement('div')
 var token = localStorage.getItem('token')
 
 
@@ -50,6 +54,8 @@ modaleAjoutPhoto.appendChild(boutonRetourGaleriePhoto)
 modaleAjoutPhoto.appendChild(h2modaleAjoutPhoto)
 modaleAjoutPhoto.appendChild(boxCadreImage)
 modaleAjoutPhoto.appendChild(formulaireAjoutPhoto)
+boxCadreImage.appendChild(textBoxCadreImage)
+boxCadreImage.appendChild(imagePlaceholderBoxCadreImage)
 formulaireAjoutPhoto.appendChild(inputAjoutImage)
 formulaireAjoutPhoto.appendChild(hiddenInputUploadImage)
 formulaireAjoutPhoto.appendChild(labelTitre)
@@ -57,6 +63,8 @@ formulaireAjoutPhoto.appendChild(inputTitre)
 formulaireAjoutPhoto.appendChild(labelCatégorie)
 formulaireAjoutPhoto.appendChild(inputCatégorie)
 formulaireAjoutPhoto.appendChild(inputBoutonValider)
+formulaireAjoutPhoto.appendChild(erreurImageManquante)
+inputCatégorie.appendChild(optionCatégorie0)
 inputCatégorie.appendChild(optionCatégorie1)
 inputCatégorie.appendChild(optionCatégorie2)
 inputCatégorie.appendChild(optionCatégorie3)
@@ -73,14 +81,17 @@ modaleAjoutPhoto.id = "modaleAjoutPhoto"
 boutonRetourGaleriePhoto.id = "boutonRetourGaleriePhoto"
 formulaireAjoutPhoto.id = "formulaireAjoutPhoto"
 boxCadreImage.id = "boxCadreImage"
+textBoxCadreImage.id = "textBoxCadreImage"
+imagePlaceholderBoxCadreImage.id = "imagePlaceholderBoxCadreImage"
 inputAjoutImage.id = "inputAjoutImage"
 hiddenInputUploadImage.id = "hiddenInputUploadImage"
+labelTitre.id = "labelTitre"
 inputTitre.id = "inputTitre"
 inputBoutonValider.id = "inputBoutonValider"
-labelTitre.style.class = "labelAjoutPhoto"
-labelCatégorie.style.class = "labelAjoutPhoto"
+labelCatégorie.id = "labelCatégorie"
 inputCatégorie.id = "catégories"
 placementImageuploade.id = "placementImageuploade"
+erreurImageManquante.id= "erreurImageManquante"
 
 // Attributs nécessaires
 modaleGaleriePhoto.setAttribute("class","modal")
@@ -88,7 +99,8 @@ modaleGaleriePhoto.setAttribute("aria-hidden","true")
 modaleGaleriePhoto.setAttribute("role","dialog")
 boutonCloseModale.setAttribute("class", 'fa-regular fa-x')
 boutonCloseModaleAjoutPhoto.setAttribute("class", 'fa-regular fa-x')
-boxCadreImage.setAttribute("class", 'fa-light fa-image')
+boutonRetourGaleriePhoto.setAttribute("class", 'fa-solid fa-arrow-left')
+imagePlaceholderBoxCadreImage.setAttribute("class", 'fa-regular fa-image')
 
 //Inputs du formulaire d'ajout de photos
 
@@ -100,6 +112,7 @@ labelCatégorie.setAttribute("for","Catégorie")
 inputTitre.setAttribute("name", "champTitre")
 inputTitre.setAttribute("type", "text")
 inputCatégorie.setAttribute("name", "champCatégorie")
+optionCatégorie0.setAttribute("class", "disabled selected value")
 optionCatégorie1.setAttribute("value", 1)
 optionCatégorie2.setAttribute("value", 2)
 optionCatégorie3.setAttribute("value", 3)
@@ -110,19 +123,20 @@ inputBoutonValider.setAttribute("value", "Valider")
 inputTitre.setAttribute("required", "required")
 hiddenInputUploadImage.setAttribute("required", "required")
 inputAjoutImage.setAttribute("required", "required")
+inputCatégorie.setAttribute("required", "required")
 
 // Ajout du texte
 h2blocmodaleGaleriePhoto.textContent = "Galerie Photo"
 boutonAjouterPhoto.textContent = "Ajouter une photo"
 boutonSupprimergalerie.textContent = "Supprimer la galerie"
 h2modaleAjoutPhoto.textContent = "Ajout photo"
-boutonRetourGaleriePhoto.textContent = "<="
-boxCadreImage.textContent = "jpg, png: 4mo max"
+textBoxCadreImage.textContent = "jpg, png: 4mo max"
 labelTitre.textContent = "Titre"
 labelCatégorie.textContent = "Catégorie"
 optionCatégorie1.textContent = "Objets"
 optionCatégorie2.textContent = "Appartements"
 optionCatégorie3.textContent = "Hôtels & Restaurants"
+erreurImageManquante.textContent = "Image requise"
 
 // Je souhaite ne pas les afficher par défaut
 modaleGaleriePhoto.style.display= "none"
@@ -130,6 +144,7 @@ blocmodaleGaleriePhoto.style.display = "none"
 modaleAjoutPhoto.style.display = "none"
 hiddenInputUploadImage.style.display = "none"
 placementImageuploade.style.display = "none"
+erreurImageManquante.style.display = "flex"
 
 function ActualisationGaleriePrincipale() {
     fetch("http://localhost:5678/api/works").then(p => p.json().then(
@@ -148,6 +163,7 @@ p =>{
             console.log("Galerie principale actualisée")
         }))
 }
+ActualisationGaleriePrincipale()
 
 function AffichageGalerieModale() {
 galerieblocmodaleGaleriePhoto.textContent = "";
@@ -305,6 +321,7 @@ console.log(event.target.files[0])
 placementImageuploade.src = window.URL.createObjectURL(event.target.files[0])
 console.log(window.URL.createObjectURL(event.target.files[0]))
 placementImageuploade.style.display = "flex"
+erreurImageManquante.style.display = "none"
 // le dossier content les images est considéré comme un tableau. 
 // Il faut donc utiliser les [] pour que la sélection s'opère correctement dans le code
 })
@@ -312,10 +329,10 @@ placementImageuploade.style.display = "flex"
 
 formulaireAjoutPhoto.addEventListener("submit", function(event){
     event.preventDefault()
-    if (hiddenInputUploadImage.files[0]) {
-    submitForm(event);
+    if (!hiddenInputUploadImage.files[0]) {
+        event.preventDefault();
+        console.log("erreur Image manquante")
     } else {
-        //message erreur
-        console.log("Message erreur")
+        submitForm(event);
     }
 })
