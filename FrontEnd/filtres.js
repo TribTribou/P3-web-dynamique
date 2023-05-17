@@ -1,14 +1,4 @@
-/*//Récupérations des projets depuis le fichier Json
-const reponse = await fetch("http://localhost:5678/api/works");
-const projets = await reponse.json();
-
-for (let i = 0; i < Projets.lenghth; i++) {
-    const projet = projets[i];
-    
-
-
-}
-*/
+//récupération des projets de la galerie
 fetch("http://localhost:5678/api/works").then(p => p.json().then(
     p =>{
         console.log(p)
@@ -33,19 +23,6 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
         BoutonObjets.className= "filtres"
         BoutonAppartements.className= "filtres"
         BoutonHotelRest.className= "filtres"
-        
-        /* for (let currentElement of p ) {
-            const Projet = document.createElement("figure")
-            const ProjetImg = document.createElement("img")
-            const ProjetTitle = document.createElement("figcaption")
-            BoutonTous.className= "filtres"
-            ProjetImg.src = currentElement.imageUrl
-            ProjetTitle.textContent = currentElement.title
-            Projet.appendChild(ProjetImg)
-            Projet.appendChild(ProjetTitle)
-            document.querySelector(".gallery").appendChild(Projet)
-        } */
-
 
         BoutonTous.addEventListener ("click", function (){
             console.log("bouton Tous bien cliqué")
@@ -66,16 +43,12 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
 
         BoutonObjets.addEventListener ("click", function (){
             console.log("bouton Objets bien cliqué")
-            /*const projetsFiltrés = projets.filter(function (){})*/
             document.querySelector(".gallery").textContent = ""
-            /* const projetsFiltrésTous = projets.filter(function (figure){
-                return projets.name = "objets"
-            }); */
             const projetsFiltrés = p.filter(function (Projet){
                 return Projet.category.name  == "Objets"
 
             })
-            for (let currentElement of projetsFiltrés ) {
+            for (let currentElement of projetsFiltrés ) { // cette ligne sert à récupérer précisément la liste des projets
                 const Projet = document.createElement("figure")
                 const ProjetImg = document.createElement("img")
                 const ProjetTitle = document.createElement("figcaption")
@@ -87,18 +60,13 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
                 document.querySelector(".gallery").appendChild(Projet)
             }
             console.log(p)
-            /* console.log(ProjetsTous) =>n'est plu utilisé */
         })
 
         BoutonAppartements.addEventListener ("click", function (){
             console.log("bouton Appartements bien cliqué")
-            /*const projetsFiltrés = projets.filter(function (){})*/
             document.querySelector(".gallery").textContent = ""
-            /* const projetsFiltrésTous = projets.filter(function (figure){
-                return projets.name = "objets"
-            }); */
             const projetsFiltrés = p.filter(function (Projet){
-                return Projet.category.name  == "Appartements"
+                return Projet.category.name  == "Appartements" // ici on sélectionne précisement la catégorie à filtrer
 
             })
             for (let currentElement of projetsFiltrés ) {
@@ -113,16 +81,11 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
                 document.querySelector(".gallery").appendChild(Projet)
             }
             console.log(p)
-            /* console.log(ProjetsTous) =>n'est plu utilisé */
         })
 
         BoutonHotelRest.addEventListener ("click", function (){
             console.log("bouton Hotel bien cliqué")
-            /*const projetsFiltrés = projets.filter(function (){})*/
             document.querySelector(".gallery").textContent = ""
-            /* const projetsFiltrésTous = projets.filter(function (figure){
-                return projets.name = "objets"
-            }); */
             const projetsFiltrés = p.filter(function (Projet){
                 return Projet.category.name  == "Hotels & restaurants"
 
@@ -139,7 +102,6 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
                 document.querySelector(".gallery").appendChild(Projet)
             }
             console.log(p)
-            /* console.log(ProjetsTous) =>n'est plu utilisé */
         })
     }
         

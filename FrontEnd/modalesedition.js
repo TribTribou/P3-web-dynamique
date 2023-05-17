@@ -275,16 +275,11 @@ inputAjoutImage.addEventListener("click",function(event) {
 
 // fonction d'envoi du formulaire, je l'appel après avoir générer l'aperçu de l'image pour éviter des conflits
  function submitForm(event) {
-    //event.preventDefault();
      // Créer un objet FormData avec les données du formulaire
-     //let projetenvoyé = {"id":1 + p.length,"title":inputTitre.value,"imageUrl":"http://localhost:5678/images/" + inputTitre.value + ".png","image":hiddenInputUploadImage.files[0],"categoryId":inputCatégorie.value,"userId":1}
      var envoiFormulaire = new FormData();
-     //formData.append("id", 1 + p.length);
      envoiFormulaire.append("image", hiddenInputUploadImage.files[0]);
      envoiFormulaire.append("title", inputTitre.value);
-     //formData.append("imageUrl", "http://localhost:5678/images/" + inputTitre.value + ".png");
      envoiFormulaire.append("category", inputCatégorie.value);
-     //formData.append("userId", 1);
      console.log(envoiFormulaire)
      console.log(hiddenInputUploadImage.files[0])
      console.log(inputTitre.value)
@@ -293,7 +288,6 @@ inputAjoutImage.addEventListener("click",function(event) {
 fetch("http://localhost:5678/api/works", {
     method: "POST",
     headers: {
-        //"content-type": "multipart/form-data",
         Authorization: "Bearer " + token
 
     },

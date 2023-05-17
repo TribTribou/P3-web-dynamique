@@ -77,7 +77,7 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
     
     labelMail.textContent = "E-mail"
     labelMdp.textContent = "Mot de passe"
-    // J'ajoute des attributs action et method à mes formulaires
+    // J'ajoute des attributs action et method à mes éléments de formulaires
     labelMail.setAttribute("for","mail")
     mailInput.setAttribute("type","email")
     mailInput.setAttribute("name","champMail")
@@ -219,44 +219,11 @@ fetch("http://localhost:5678/api/works").then(p => p.json().then(
             /* Ma fonction projets, qui me sert à réafficher les éléments de la page principale.
             J'ai pris soin d'ajouter une ligne pour cacher la section #login. */
             console.log("fonction projets complétée")
-
-             /* boutonConnecter.addEventListener ( "submit", function () {
-                console.log("bouton connecter bien cliqué")
-                submitEvent.target.champMail.value 
-                // Besoin de créer une variable pour récupérer le nom du champ?
-                submitEvent.target.champMdp.value
-                fetch("http://localhost:5678/api/fetch/post/users/login").then
-                (()=>{if 
-                  ((champMail.value == true) && (champMdp.value == true)) {
-                    console.log("retour à l'accueil")
-                    document.querySelector("#introduction").style.display = "flex"
-                    document.querySelector("#portfolio").style.display = "block"
-                    document.querySelector("#contact").style.display = "block"
-                    document.querySelector("#login").style.display = "none"
-                    document.querySelector("footer").style.display = "block"
-                    BoutonLogin.style.fontWeight = "normal"
-                    BoutonProjets.style.fontWeight = "normal"
-                    console.log("fonction retour à l'accueil effectuée")
-                    // Code de retour à l'accueil
-                } 
-                else {
-                    // Message d'erreure en modale (pop-up)
-                    console.log("Email ou Mdp erroné")
-             }}) 
-                
-            }) */
               });
               
               
 
         })
-        
-        /*  event.target.nomduchamp.value  submit.target.namechamp.value (value= ce qui est entré dans le champ)
-        utiliser le fetch post /users/login après avoir récupéré les informations des formulaires 
-        => .then if false => message erreure if true => page d'accueil
-        => intégrer un console.log pour vérifier d'éventuelles erreures
-         */
-
         closeModalButton.addEventListener("click", function () {
           document.querySelector("#modaleConnexionRefusée").style.display = "none"
         })
